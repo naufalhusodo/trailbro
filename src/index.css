@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background-color: #0f0f0f;
+  color: #f5f5f5;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.monospace {
+  font-family: 'Courier New', monospace;
+}
+
+/* built per: frontend.md */
