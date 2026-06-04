@@ -1,6 +1,6 @@
 # SimBrake AI Trainer
 
-Trail braking practice tool with AI coaching via Google Gemini.
+Sim racing pedal telemetry viewer with gamepad input support.
 
 ## Setup
 
@@ -11,13 +11,9 @@ npm run dev
 
 ## Deployment
 
-Deploy to Vercel:
-1. Connect GitHub repository to Vercel
-2. Add environment variable: `GEMINI_API_KEY` (your Google Gemini API key)
-3. Deploy from main branch
+Deploy to Vercel by connecting the GitHub repository — no environment variables required.
 
 ## Tech Stack
 - React + Vite
 - Tailwind CSS
 - Web Gamepad API
-- Google Gemini API (via serverless proxy)

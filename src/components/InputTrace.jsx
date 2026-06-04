@@ -1,10 +1,9 @@
 import { useRef, useEffect } from 'react';
 
-export default function InputTrace({ currentPressure, currentThrottle, targetZone }) {
+export default function InputTrace({ currentPressure, currentThrottle }) {
   const canvasRef = useRef(null);
   const historyRef = useRef([]);
   const rafRef = useRef(null);
-  const lastUpdateRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,18 +13,15 @@ export default function InputTrace({ currentPressure, currentThrottle, targetZon
     const width = canvas.width;
     const height = canvas.height;
 
-    const draw = (timestamp) => {
-      // Add current pressure and throttle to history (keep last ~600 frames = ~10 seconds at 60fps for slower scroll)
+    const draw = () => {
       historyRef.current.push({ brake: currentPressure, throttle: currentThrottle });
       if (historyRef.current.length > 600) {
         historyRef.current.shift();
       }
 
-      // Clear canvas
       ctx.fillStyle = '#1f1f1f';
       ctx.fillRect(0, 0, width, height);
 
-      // Draw grid lines
       ctx.strokeStyle = '#333';
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -38,16 +34,15 @@ export default function InputTrace({ currentPressure, currentThrottle, targetZon
 
       const histLen = historyRef.current.length;
 
-      // Draw throttle history line (green, behind brake)
       if (histLen > 1) {
         ctx.lineWidth = 2;
         ctx.strokeStyle = '#22c55e';
         ctx.beginPath();
-        
+
         for (let i = 0; i < histLen; i++) {
           const x = (i / 600) * width;
           const y = height - (historyRef.current[i].throttle / 100) * height;
-          
+
           if (i === 0) {
             ctx.moveTo(x, y);
           } else {
@@ -57,16 +52,15 @@ export default function InputTrace({ currentPressure, currentThrottle, targetZon
         ctx.stroke();
       }
 
-      // Draw brake pressure history line (on top) - always red
       if (histLen > 1) {
         ctx.lineWidth = 2;
         ctx.strokeStyle = '#ef4444';
         ctx.beginPath();
-        
+
         for (let i = 0; i < histLen; i++) {
           const x = (i / 600) * width;
           const y = height - (historyRef.current[i].brake / 100) * height;
-          
+
           if (i === 0) {
             ctx.moveTo(x, y);
           } else {
@@ -86,7 +80,7 @@ export default function InputTrace({ currentPressure, currentThrottle, targetZon
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [currentPressure, currentThrottle, targetZone]);
+  }, [currentPressure, currentThrottle]);
 
   return (
     <canvas
@@ -97,4 +91,3 @@ export default function InputTrace({ currentPressure, currentThrottle, targetZon
     />
   );
 }
-// built per: frontend.md, requirements.md, techstack.md
