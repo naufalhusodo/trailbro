@@ -1,6 +1,8 @@
-# SimBrake AI Trainer
+# TrailBro
 
 Sim racing pedal telemetry viewer with gamepad input support.
+
+> **Disclaimer:** This app currently only works with an Xbox gamepad. Steering wheel support hasn't been tested yet.
 
 ## Setup
 
@@ -8,10 +10,6 @@ Sim racing pedal telemetry viewer with gamepad input support.
 npm install
 npm run dev
 ```
-
-## Deployment
-
-Deploy to Vercel by connecting the GitHub repository — no environment variables required.
 
 ## Tech Stack
 - React + Vite
