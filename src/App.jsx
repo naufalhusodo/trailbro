@@ -15,7 +15,8 @@ function App() {
       gamepadIndex: null,
       axisMapping: { brake: 6, throttle: 7, steering: 0 },
       lockToLock: 900,
-      wheelVariant: 'Generic'
+      wheelVariant: 'Generic',
+      inputMode: 'gamepad'
     };
   });
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -53,7 +54,7 @@ function App() {
     localStorage.setItem('simbrake-settings', JSON.stringify(newSettings));
   };
 
-  useGamepadInput(settings.gamepadIndex, settings.axisMapping, handleInput);
+  useGamepadInput(settings.gamepadIndex, settings.axisMapping, handleInput, settings.inputMode);
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-white p-4 flex flex-col">

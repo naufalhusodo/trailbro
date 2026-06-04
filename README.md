@@ -1,8 +1,8 @@
 # TrailBro
 
-Sim racing pedal telemetry viewer with gamepad input support.
+Sim racing pedal telemetry viewer with gamepad and steering wheel input support.
 
-> **Disclaimer:** This app currently only works with an Xbox gamepad. Steering wheel support hasn't been tested yet.
+> Try it live: [naufalhusodo.github.io/trailbro](https://naufalhusodo.github.io/trailbro/)
 
 ## Setup
 

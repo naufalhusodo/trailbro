@@ -1,6 +1,6 @@
 export default function SteeringWheel({ steeringValue, lockToLock, wheelVariant }) {
   const rotation = steeringValue * (lockToLock / 2);
-  const wheelSrc = `/icons/${encodeURIComponent(wheelVariant)}/Wheel.png`;
+  const wheelSrc = `${import.meta.env.BASE_URL}icons/${encodeURIComponent(wheelVariant)}/Wheel.png`;
 
   return (
     <div className="flex flex-col items-center gap-2">

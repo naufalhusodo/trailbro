@@ -79,9 +79,46 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
           </button>
         </div>
 
+        {/* Input Mode */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Input Mode</label>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setLocalSettings(prev => ({
+                ...prev,
+                inputMode: 'gamepad',
+                axisMapping: prev.inputMode !== 'gamepad' ? { brake: 6, throttle: 7, steering: 0 } : prev.axisMapping
+              }))}
+              className={`flex-1 px-3 py-2 rounded font-medium text-sm ${
+                localSettings.inputMode === 'gamepad'
+                  ? 'bg-blue-600'
+                  : 'bg-gray-700 hover:bg-gray-600'
+              }`}
+            >
+              Gamepad
+            </button>
+            <button
+              onClick={() => setLocalSettings(prev => ({
+                ...prev,
+                inputMode: 'wheel',
+                axisMapping: prev.inputMode !== 'wheel' ? { brake: 2, throttle: 3, steering: 0 } : prev.axisMapping
+              }))}
+              className={`flex-1 px-3 py-2 rounded font-medium text-sm ${
+                localSettings.inputMode === 'wheel'
+                  ? 'bg-blue-600'
+                  : 'bg-gray-700 hover:bg-gray-600'
+              }`}
+            >
+              Steering Wheel
+            </button>
+          </div>
+        </div>
+
         {/* Axis Assignments */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Brake Button (L2/LT)</label>
+          <label className="block text-sm font-medium mb-2">
+            {localSettings.inputMode === 'wheel' ? 'Brake Axis' : 'Brake Button (L2/LT)'}
+          </label>
           <input
             type="number"
             min="0"
@@ -96,7 +133,9 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Throttle Button (R2/RT)</label>
+          <label className="block text-sm font-medium mb-2">
+            {localSettings.inputMode === 'wheel' ? 'Throttle Axis' : 'Throttle Button (R2/RT)'}
+          </label>
           <input
             type="number"
             min="0"
@@ -153,7 +192,7 @@ export default function SettingsModal({ isOpen, onClose, settings, onSave }) {
           </select>
           <div className="mt-2 flex justify-center">
             <img
-              src={`/icons/${encodeURIComponent(localSettings.wheelVariant)}/Wheel.png`}
+              src={`${import.meta.env.BASE_URL}icons/${encodeURIComponent(localSettings.wheelVariant)}/Wheel.png`}
               alt="Preview"
               className="w-24 h-24 object-contain opacity-70"
               onError={(e) => { e.target.style.display = 'none' }}

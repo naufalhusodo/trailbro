@@ -36,15 +36,21 @@ export const normalizeAxis = (value, deadzone = 0.02) => {
 };
 
 // Get current gamepad state
-export const readGamepad = (gamepadIndex, axisMapping) => {
+export const readGamepad = (gamepadIndex, axisMapping, inputMode = 'gamepad') => {
   const gamepads = navigator.getGamepads();
   const gamepad = gamepads[gamepadIndex];
   
   if (!gamepad) return null;
 
-  // Read raw values
-  const rawBrake = normalizeButton(gamepad.buttons[axisMapping.brake]?.value || 0);
-  const rawThrottle = normalizeButton(gamepad.buttons[axisMapping.throttle]?.value || 0);
+  let rawBrake, rawThrottle;
+
+  if (inputMode === 'wheel') {
+    rawBrake = normalizeTrigger(gamepad.axes[axisMapping.brake] || 0);
+    rawThrottle = normalizeTrigger(gamepad.axes[axisMapping.throttle] || 0);
+  } else {
+    rawBrake = normalizeButton(gamepad.buttons[axisMapping.brake]?.value || 0);
+    rawThrottle = normalizeButton(gamepad.buttons[axisMapping.throttle]?.value || 0);
+  }
 
   // Apply smoothing
   smoothingState.brake = smoothInput(rawBrake, smoothingState.brake);
