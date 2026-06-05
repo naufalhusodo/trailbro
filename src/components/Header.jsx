@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function Header({ onSettingsClick }) {
   return (
     <div className="flex justify-between items-center mb-4">
@@ -6,6 +8,7 @@ export default function Header({ onSettingsClick }) {
         <button
           onClick={onSettingsClick}
           className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded"
+          aria-label="Open settings"
         >
           Settings
         </button>
@@ -13,3 +16,7 @@ export default function Header({ onSettingsClick }) {
     </div>
   );
 }
+
+Header.propTypes = {
+  onSettingsClick: PropTypes.func.isRequired,
+};

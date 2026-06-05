@@ -1,17 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { readGamepad } from '../utils/input';
 
-// Custom hook for gamepad input polling at 60fps
 export const useGamepadInput = (gamepadIndex, axisMapping, onInput, inputMode = 'gamepad') => {
   const rafRef = useRef(null);
+  const smoothingRef = useRef({ brake: 0, throttle: 0 });
+  const rawDataRef = useRef(null);
 
   useEffect(() => {
     if (gamepadIndex === null || !axisMapping) return;
 
     const pollInput = () => {
-      const input = readGamepad(gamepadIndex, axisMapping, inputMode);
+      const input = readGamepad(gamepadIndex, axisMapping, inputMode, smoothingRef);
       if (input) {
-        onInput(input);
+        rawDataRef.current = input.raw;
+        const { raw, ...normalized } = input;
+        onInput(normalized);
       }
       rafRef.current = requestAnimationFrame(pollInput);
     };
@@ -24,5 +27,6 @@ export const useGamepadInput = (gamepadIndex, axisMapping, onInput, inputMode = 
       }
     };
   }, [gamepadIndex, axisMapping, onInput, inputMode]);
+
+  return rawDataRef;
 };
-// built per: backend.md, techstack.md, requirements.md

@@ -15,4 +15,4 @@ export default {
   },
   plugins: [],
 }
-// built per: frontend.md, techstack.md
+

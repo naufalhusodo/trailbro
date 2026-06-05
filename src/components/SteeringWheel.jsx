@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function SteeringWheel({ steeringValue, lockToLock, wheelVariant }) {
   const rotation = steeringValue * (lockToLock / 2);
   const wheelSrc = `${import.meta.env.BASE_URL}icons/${encodeURIComponent(wheelVariant)}/Wheel.png`;
@@ -19,4 +21,9 @@ export default function SteeringWheel({ steeringValue, lockToLock, wheelVariant 
     </div>
   );
 }
-// built per: frontend.md, requirements.md, techstack.md
+
+SteeringWheel.propTypes = {
+  steeringValue: PropTypes.number.isRequired,
+  lockToLock: PropTypes.number.isRequired,
+  wheelVariant: PropTypes.string.isRequired,
+};

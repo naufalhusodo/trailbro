@@ -1,9 +1,15 @@
 import { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 export default function InputTrace({ currentPressure, currentThrottle }) {
   const canvasRef = useRef(null);
   const historyRef = useRef([]);
   const rafRef = useRef(null);
+  const pressureRef = useRef(currentPressure);
+  const throttleRef = useRef(currentThrottle);
+
+  pressureRef.current = currentPressure;
+  throttleRef.current = currentThrottle;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,7 +20,7 @@ export default function InputTrace({ currentPressure, currentThrottle }) {
     const height = canvas.height;
 
     const draw = () => {
-      historyRef.current.push({ brake: currentPressure, throttle: currentThrottle });
+      historyRef.current.push({ brake: pressureRef.current, throttle: throttleRef.current });
       if (historyRef.current.length > 600) {
         historyRef.current.shift();
       }
@@ -80,7 +86,7 @@ export default function InputTrace({ currentPressure, currentThrottle }) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [currentPressure, currentThrottle]);
+  }, []);
 
   return (
     <canvas
@@ -91,3 +97,8 @@ export default function InputTrace({ currentPressure, currentThrottle }) {
     />
   );
 }
+
+InputTrace.propTypes = {
+  currentPressure: PropTypes.number.isRequired,
+  currentThrottle: PropTypes.number.isRequired,
+};
